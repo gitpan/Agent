@@ -7,8 +7,10 @@ TODO
 test.pa
 test.pl
 Agent/Message.pm
-Agent/TCPIP.pm
-examples/ipresolv.pl
-examples/loop.pa
-examples/loop.pl
-t/message.t
+Agent/Transport.pm
+Agent/Transport/TCP.pm
+examples/Loop.pa
+examples/Static.pa
+examples/SpaceFree.pa
+examples/HelloWorld.pa
+examples/ex.pl

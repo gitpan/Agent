@@ -8,15 +8,12 @@ Pre-requisites
 You _must_ have the following modules installed on your system in order for
 Agent to function properly:
 
-	Tom-2.00 (and inherently Protect, Safe, MD5, & Data:Dumper)
+	Class::Tom-2.03+ (and inherently: Safe, MD5, & Data:Dumper)
 	[IO]
 
-IO and Safe are now distributed with the Perl core, so if you have Perl
-5.004, don't worry about them.  If you don't, you can pick up the latest
-versions from your local CPAN mirror.  Both Tom and Protect can be found at
-James Duncan's website:
-
-	http://www.hawk.igs.net/~jduncan
+IO, Safe, and Data::Dumper are now distributed with the Perl core, so if you
+have Perl 5.004_04, don't worry about them.  If not, you can pick them (and
+Tom) up from your nearest CPAN mirror.
 
 
 Installing
@@ -24,7 +21,6 @@ Installing
 
 In general, the following should work:
 
-	edit $Hostname in Agent.pm (see 'Configuring Agent')
 	perl Makefile.PL
 	make
 	make install
@@ -34,26 +30,12 @@ Note for Win32 Users
 --------------------
 
 If you're running Win32, you'll be asked if you want Agent installed
-directly, or in the standard [above] fashion.  Unless you had the guts to
-build perl yourself, answer yes to this question.  And don't try to 'make'
-or 'make install' a non-existant Makefile :-).
-
-
-Configuring Agent
------------------
-
-I haven't added ip-resolution to Agent yet, so you'll have to enter your ip
-address manually.  To do this, just edit the 'Agent.pm' file, and set:
-
-	$Hostname = 'your.ip.address.here'	# somewhere near the top
-
-In addition to this, if you have Tom-2.00 (and you _should_), you'll have to
-apply the patch-file I've included ('Tom-2.00-03.patch'), or simply just
-copy 'Tom.pm.new' over 'Tom.pm'.  This patch adds some functions that should
-be included in the next release of Tom, and that are required by Agent.
+directly, or in the standard [above] fashion.  Unless you've built perl
+yourself, answer yes to this question.  And don't try to 'make' or
+'make install' a non-existant Makefile ;-).
 
 
 Please read the README file before you start to play :-).
 
 --Steve Purkis
-January 23, 1998
+June 22, 1998

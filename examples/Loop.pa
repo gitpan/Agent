@@ -1,0 +1,57 @@
+#!/usr/bin/perl
+
+##
+# The Loop agent:
+#   - transmits messages back & forth to & from another loop agent.
+#   - new recognizes:
+#	Tell    => 'ip.address:port' (of remote agent. optional)
+#	verbose => 1                 (optional)
+#   - Steve Purkis <spurkis@engsoc.carleton.ca>, Jan 18, 1998.
+##
+
+package Agent::Loop;
+use Agent;
+@ISA = qw( Agent );
+
+sub new {
+	my ($class, %args) = @_;
+	my $self = {};
+	foreach (keys(%args)) { $self->{"$_"} = $args{"$_"}; }
+	bless $self, $class;
+}
+
+sub agent_main {
+	my ($self, @args) = @_;
+
+	# first, get a Transport address:
+	my $tcp = new Agent::Transport(
+		Medium => 'TCP'
+	) or die "Couldn't get a tcp transport address: $!!\n";
+	print "Got tcp address: " . $tcp->address . "\n" if $self->{verbose};
+
+	# start the message...
+	my $msg = new Agent::Message(
+		Body => [ $tcp->address . "\n", 'hi' ]
+	);
+
+	print "Started Loop agent.\n";
+
+	# should we start the loop, or wait for the remote to start?
+	if ($self->{Tell}) {
+		print "Initiating loop...\n";
+		$msg->add_dest( 'TCP', $self->{Tell} ) or die "Error: $!\n";
+		$msg->send;
+	}
+
+	while (1) {	# loop till user-break
+		my @incoming = $tcp->recv(
+			Timeout => 120
+		) or die "Error: $!\n";
+		chop (my $remote = $incoming[0]);
+		print "got message from $remote.\n" if $self->{verbose};
+		$msg->add_dest( 'TCP', $remote) or die "Error: $!\n";
+		$msg->send;
+	}
+}
+
+1;

@@ -1,0 +1,27 @@
+Agent Examples
+--------------
+
+There are four sample agents provided with this distribution of Agent:
+   *	the Loop agent - repeatedly sends the message 'hi' to another loop
+	agent.  This one can be invoked in one of two ways: as an initiator
+	or as a reciever.  An initiator starts the loop, while a reciever
+	waits for the loop to be started.
+
+   *	the Static agent - allows an agent to execute on the host machine.
+	Acts as an 'agent server' of sorts.
+
+   *	the HelloWorld agent - transports itself to a remote address, and
+	attempts to print 'Hello World' on the remote screen.
+
+   *	the SpaceFree agent - transports itself to a remote addresses, and
+	attempts to find out how much space is free on each host,
+	printing a summary on the last host it reaches.
+
+I haven't the time to create a more complicated agent than those listed,
+but if anybody comes up with one, I'd be more than happy to include it with
+the full release.
+
+Usage is contained within each file.
+
+--Steve Purkis
+March 28, 1998

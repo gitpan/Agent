@@ -19,5 +19,8 @@ ok;
 
 ($a = new Agent( File => 'test.pa' )) ? ok : nok;
 $a->agent_main() ? ok : nok;
+($b = $a->store()) ? ok : nok;
+($c = new Agent( Stored => $b )) ? ok : nok;
+
 
 1;

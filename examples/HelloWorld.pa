@@ -1,0 +1,55 @@
+#!/usr/bin/perl
+
+##
+# The HelloWorld agent:
+#   - tries to relocate to specified host, and print 'Hello World' when
+#	it gets there.  Meant to be used with the 'Static' agent.
+#   -	Arguments:
+#		Host => 'host.ip.addr[:port]'
+#		verbose => self evident
+#   - Steve Purkis <spurkis@engsoc.carleton.ca>, March 24, 1998.
+##
+
+package Agent::HelloWorld;
+use Agent;
+@ISA = qw( Agent );
+
+sub new {
+	my ($class, %args) = @_;
+	my $self = {};
+	foreach (keys(%args)) { $self->{"$_"} = $args{"$_"}; }
+	bless $self, $class;
+}
+
+sub agent_main {
+	my ($self, @args) = @_;
+
+	# NB: we don't need a transport address..
+
+	# delete so we only do one hop..
+	my $to = delete($self->{Host});
+	print "Are we there yet?\n" if $self->{verbose};
+
+	# are we there yet?
+	unless ($to) {
+		print				# yep, reach fruition
+		  "\n\t\t+--------------+\n" .
+		    "\t\t: Hello World! :\n" .
+		    "\t\t+--------------+\n\n";
+		return (1);			# and die happy.
+	}
+
+	# no, so transfer self to remote host:
+	print "Dispatching HelloWorld agent... " if $self->{verbose};
+	my $msg = new Agent::Message(
+		Body      => [ "Run me\n", $self->store() ],
+		Transport => TCP,
+		Address   => $to
+	);
+	$msg->send;
+	print "Done.\n";
+}
+
+
+1;
+

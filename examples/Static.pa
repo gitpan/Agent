@@ -1,0 +1,110 @@
+!/usr/bin/perl
+
+##
+# The Static example agent:
+#   -	A 'static' agent is just that; it doesn't move away from it's machine.
+#	This static agent is an example of how one might host agents (it trusts
+#	that the agent won't do anything nasty!).
+#   -	Constructor Arguments:
+#		Address => address to try to register
+#		Medium  => address medium (optional)
+#		verbose => verbosity level
+#		Safe    => ref to a safe compartment
+#   - Steve Purkis <spurkis@engsoc.carleton.ca>, March 24, 1998.
+##
+
+package Agent::Static;
+
+use Agent;
+@ISA = qw( Agent );
+
+
+##
+# new - Constructor.  Returns a reference to a new Static agent.
+##
+sub new {
+	my ($class, %args) = @_;
+	my $self = {};
+	foreach (keys(%args)) { $self->{"$_"} = $args{"$_"}; }
+	bless $self, $class;
+}
+
+
+##
+# agent_main - Main agent program.  Waits for incoming requests, and hosts
+#	any agents it recieves. If one was running a real OS, one could do a
+#	double fork() and run this in the background on UN*X machines.
+#	Threads might also work for this - I havent had time to try yet.
+##
+sub agent_main {
+	my ($self, @args) = @_;
+
+	print "Starting Static agent.\n";
+
+	# first, get a Transport address:
+	my %args;
+	$args{Medium} = $self->{Medium} || 'TCP';
+	$args{Address} = $self->{Address} if $self->{Address};
+	my $tcp = new Agent::Transport( %args ) or die
+	   "Couldn't get a tcp transport address: $!!\n";
+	print "Got tcp address: " . $tcp->address . "\n";
+
+	while (1) {
+		print "Waiting for an agent...\n" if $self->{verbose};
+		my @msg = $self->getmsg($tcp) or next;
+		$self->host_agent(@msg);
+	}
+}
+
+
+##
+# getmsg - internal.  Waits for a incoming message, & returns it.
+##
+sub getmsg {
+	my ($self, $trans) = @_;		# all agents & subs are oo
+	my ($from, @incoming) = $trans->recv( Timeout => 120) or return;
+
+	unless (@incoming) {
+		warn "No data in message!\n";
+		return;
+	}
+	my ($d, $addr, $med) = split(/\s+/, $from);
+	print "message recv'd from $from\n" if $self->{verbose};
+	print "Body:\n", @incoming, "\n" if $self->{verbose} > 1;
+	return @incoming;
+}
+
+##
+# host_agent - internal.  Executes an agent in the standard fashion.
+##
+sub host_agent {
+	my $self = shift;
+	my $stored = join('', @_);
+
+	print "Executing agent...\n" if ($self->{verbose});
+	if ($self->{Safe}) {
+		my $agent = new Agent(
+			Stored => $stored,
+			Safe => $self->{Safe}
+		) or return();
+		$agent->run( Safe => $self->{Safe} );
+	} else {
+		my $agent = new Agent( Stored => $stored );
+		unless ($agent) {
+			print "Unable to rebuild stored agent!\n";
+			return();
+		}
+		$agent->run();
+	}
+}
+
+1;
+
+
+__END__
+
+Accepted message format:
+
+	From: <address> [<medium>]
+	<stored agent>
+

@@ -2,20 +2,12 @@
 TODO
 ----
 
-These are some things I'd like to do before releasing Agent 3.01.
+These are some things I'd like to do:
 
-    -	Agent identification is slightly broken: it doesn't return the
-	current state of the agent.
-    -	Agent::Message should support MD5 checksums.
-    -	Make Agent smart enough to figure out the IP address of the
-	local host.
-    -	Make an Agent::Socket test file.
-
-Other goals:
-    -	support the KQML/KIF communication standards implemented as classes
-	(perhaps external to Agent?).
-    -	direct support for PGP signatures & encryption.
+    -	support KQML/KIF (in progress)
+    -	support for PGP signatures & encryption.
     -	make sure security features work properly.
+    -	Threads support?
 
 --Steve Purkis
-January 23, 1997
+July 30, 1998

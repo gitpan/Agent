@@ -26,7 +26,7 @@ DONE
 
 	$ans = question ($ans, "Do you want me to install Agent directly?");
 	if ($ans eq "Y") { $install = 1; }
-} else { print "\nYou don't seem to be running Win32... Good.\n"; }
+} else { print "\nYou don't seem to be running Win32... good.\n"; }
 
 print "\nChecking module dependancies:\n";
 
@@ -95,7 +95,8 @@ sub win_install {
 	$agentdir = '.';	# where Agent was unpacked
 	$ans = 'Y';	     # default answer (ie: user presses <enter>)
 
-	@files = ('Agent.pm', 'Agent\\TCPIP.pm', 'Agent\\Message.pm');
+	@files = ('Agent.pm', 'Agent\\Transport.pm',
+	          'Agent\\Transport\\TCP.pm', 'Agent\\Message.pm');
 
 	while (!( -e $files[0] )) {
 		print "I couldn't find ", $files[0],
@@ -127,6 +128,13 @@ sub win_install {
 		mkdir( $newdir, '' ) or die "Fatal: couldn't create $newdir!";
 	} else { print "Detected a previous installation of Agent.\n"; }
 
+	my $newdir = "$perldir\\Agent\\Transport";
+	unless ( -e $newdir ) {
+		$! = '';
+		print "creating $newdir\n";
+		mkdir( $newdir, '' ) or die "Fatal: couldn't create $newdir!";
+	} else { print "Detected a previous installation of Agent.\n"; }
+
 	foreach (@files) {
 		my ($from, $to) = ($agentdir . '\\' . $_, $perldir . '\\' . $_);
 		cp ($from, $to);
@@ -134,7 +142,6 @@ sub win_install {
 
 	print "running test scripts...\n";
 	system("perl $agentdir\\test.pl");
-	system("perl $agentdir\\t\\message.t");
 
 	print "\nDone.\n";
 }
