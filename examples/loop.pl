@@ -2,6 +2,9 @@
 
 use Agent;
 
+$Agent::TCPIP::Debug = 1;
+$Agent::Debug = 1;
+
 # first, set up the arguments:
 my %args;
 $args{File} = 'loop.pa';

@@ -2,7 +2,8 @@
 
 ##
 #
-# DESCRIPTION: Alpha release of a skeleton Agent.pm to test ideas.
+# DESCRIPTION: Alpha-1 release of a skeleton Agent.pm to test ideas.
+# UPDATED: March 24, 1998 to conform to Class::Tom-2.02.
 # AUTHOR: Steve Purkis <spurkis@engsoc.carleton.ca>
 # DATE: January 23, 1998.
 #
@@ -12,7 +13,7 @@ package Agent;
 
 use strict;
 use UNIVERSAL;
-use Tom qw( cc );
+use Class::Tom qw( cc );
 use Agent::TCPIP;
 use Agent::Message;
 
@@ -64,10 +65,10 @@ sub new {
 			return ();
 		}
 
-		# now use Tom::cc to stick the agent's code into a Tom container:
+		# now use Class::Tom::cc to stick the agent's code into a Tom container:
 		# (note: we are only interested in the first container)
 		unless ( ($tom) = cc($code) ) {
-			warn "Agent: Tom returned no container!" if $Debug;
+			warn "Agent: Class::Tom returned no container!" if $Debug;
 			return;
 		}
 	}
@@ -237,7 +238,7 @@ sub _find_agent {
 
 	if ($name !~ /.*\.pa$/) { $name .= '.pa'; }	# add extension if needed
 	push (@dirs, '.', @INC);			# search local dir & @INC too.
-	# adapted from Tom::insert:
+	# adapted from Class::Tom::insert:
 	foreach $_ (@dirs) {
 		print "Agent: Looking in $_ for $name\n" if $Debug;
 		if (-e "$_/$name") {

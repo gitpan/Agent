@@ -30,6 +30,7 @@ sub new {
 	my $try = delete($args{Try}) || 5;
 
 	# setup the common arguments (or their defaults):
+	my $port;
 	if ($args{Address} =~ /:/) {
 		# split up address if port follows hostname ('foo.bar:80').
 		# I know IO::Socket can handle this, but I'll do it anyways...
@@ -49,12 +50,14 @@ sub new {
 		# setup a server
 		$type = "Server";
 		$args{LocalPort} = delete($args{Port});
+		$port = \$args{LocalPort};
 	} else {
 		# setup a client
 		$self->{Client} = 1;
 		$type = "Sock";
 		$args{PeerPort} = delete($args{Port});
 		$args{PeerAddr} = delete($args{Address});
+		$port = \$args{PeerPort};
 	}
 
  	print STDERR "Agent::TCPIP::new called with:\n" if $Debug;
@@ -62,7 +65,7 @@ sub new {
 
 	# try a bunch of times to secure a port...
 	while ($try-- > 0) {
-		print STDERR "Trying to capture $type port $args{LocalPort}\n" if $Debug;
+		print STDERR "Trying to capture $type port ", $$port, "\n" if $Debug;
 		last if ($sock = new IO::Socket::INET( %args ));
 
 		# if we're a server, raise the port number:

@@ -1,5 +1,5 @@
 ---------------
-Agent.pm v3.01a
+Agent.pm v3.01b
 ---------------
 
 (c) 1998 by Steve Purkis.
@@ -13,6 +13,9 @@ contains a brief overview of Agent, and some things that you'll need to know
 in order to get Agent up and running on your system.
 
 For instructions on installing and configuring Agent, see the INSTALL file.
+
+
+NOTE: v3.01b now supports Class::Tom-2.02.
 
 
 Overview
@@ -36,7 +39,7 @@ Platforms:
 	TCP/IP networking, so make sure you have it instlled.
 
 Modules:
-	Tom (and MD5, Safe*, & Data::Dumper)
+	Class::Tom (and MD5, Safe*, & Data::Dumper)
 	IO*
 
 * - distributed in Perl core for Perl5.004, so don't worry.

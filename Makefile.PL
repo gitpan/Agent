@@ -26,52 +26,47 @@ DONE
 
 	$ans = question ($ans, "Do you want me to install Agent directly?");
 	if ($ans eq "Y") { $install = 1; }
-} else { print "\nYou don't seem to be running Win32...\n"; }
+} else { print "\nYou don't seem to be running Win32... Good.\n"; }
 
 print "\nChecking module dependancies:\n";
 
 my %missing;
 print "\tIO::Socket..... ";
-eval { use IO::Socket; };
+eval " use IO::Socket; ";
 if ($@) {
 	print "not ";
 	$missing{'IO::Socket'} = 1;
 }
 print "ok.\n";
 
-print "\tTom............ ";
-eval { use Tom; };
+print "\tClass::Tom..... ";
+eval " use Class::Tom; ";
 if ($@) {
 	print "not ";
-	$missing{'Tom'} = 1;
+	$missing{'Class::Tom'} = 1;
 }
 print "ok.\n";
 
 if (%missing) {
-	print "I can't find the following modules on your system:\n";
+	print "\nI can't find the following modules on your system:\n";
 	foreach (keys(%missing)) {
 		print "\t$_\n";
 	}
 	print <<DONE;
-These modules are required by Agent. You should make sure they're installed
-before running this script again.
 
+These modules are required by Agent. You should make sure they're installed
+and run this script again.
+
+Press <enter>...
 DONE
+	my $dummy = <STDIN>;
 	exit 0;
 } else { print "You seem to have all the required modules.\n"; }
-
-eval {
-	use Tom;
-	my $tom = new Tom( Class => 'test' ) or die
-	   "I couldn't call 'tom::new'!! This is probably a bad thing.";
-	my $bob = $tom->checksum();
-};
-if ($@) { print "But don't forget to patch Tom!!\n\n"; }
-else    { $Tom = 1; print "And I see you've already patched Tom; good.\n\n"; }
 
 # are we installing on a Win32 machine?
 if ($install) {
 	win_install();
+	print "Press <enter>..."; my $dummy = <STDIN>;
 	exit;
 }
 
@@ -137,19 +132,11 @@ sub win_install {
 		cp ($from, $to);
 	}
 
-	unless ($Tom) {
-		$ans = question ($ans,
-		 "Should I install the patched [unsupported] version of Tom?");
-		unless ($ans eq 'N') {
-			cp ("$agentdir\\Tom.pm.new", "$perldir\\Tom.pm");
-		}
-	}
-
 	print "running test scripts...\n";
 	system("perl $agentdir\\test.pl");
 	system("perl $agentdir\\t\\message.t");
 
-	print "\nFinished installing Agent.";
+	print "\nDone.\n";
 }
 
 sub question {  # handles yes/no question; (default, 'message')
@@ -185,7 +172,6 @@ sub cp {				# copies from file xxx to file yyy
 	foreach (<FROM>) { print TO $_; }
 	close FROM, TO;
 }
-
 
 
 1;
