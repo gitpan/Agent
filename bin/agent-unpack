@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+
+if (!$ARGV[0]) {
+   print "Usage: agent-unpack <packedagentfile>\n";
+   exit(0);
+}
+use Agent;
+$my_agent = new Agent;
+{local $/ = undef; $tas = <>}
+wake $my_agent Agent => $tas;
+$agentdate = $my_agent->read(Name => 'Time');
+$agentauthor = $my_agent->read(Name => 'Author');
+print "Author: $agentauthor Sign Date: $agentdate \bPriority: $my_agent->{'Priority'} Code: $my_agent->{'Code'}\n";

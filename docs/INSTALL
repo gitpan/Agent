@@ -1,0 +1,22 @@
+How to install Agent
+-=-=-=-=-=-=-=-=-=-=
+
+	1. Unpack the archive (Agent-2.9.tar.gz).
+
+	2. Type 'perl Makefile.PL'.
+
+	3. Run 'make' followed by 'make install'.
+
+	4. Type 'perldoc Agent' to find out
+	   how to do things.
+
+	5. Read the Agent.pm module source code.
+
+	6. Read bin/*  it will let you know how to use
+	   Agent,  as well as also demonstrating Agentspace.
+
+	7. Write little agents to populate the net.
+
+	8. Give me a backlash,  and tell me how much you hate it, and
+	   why -> jduncan@hawk.igs.net - thanks - James.
+

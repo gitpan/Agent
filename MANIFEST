@@ -1,0 +1,11 @@
+Agent.pm
+CHANGES
+MANIFEST
+Makefile.PL
+README
+bin/agent-pack
+bin/agent-unpack
+docs/agentspace.html
+docs/FAQ
+docs/INSTALL
+docs/TODO

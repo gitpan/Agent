@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>
+Information Agents and the Agentspace Implementation
+</title>
+</head>
+<body>
+<hr>
+<h1 align="right">
+  Information Agents and the Agentspace Implementation
+</h1>
+<hr>
+<h7>
+<i>By James Duncan<br>
+May 27th, 1996<br>
+Please note,  this is a Draft
+</i>
+<br>
+<hr>
+<p>
+<b><font size="+2">The Purpose of Information Agents</font></b>
+<p>
+With the growth of both Local Area Networks and of the Internet,  Agents and
+there reletivly primitive couterparts,  Search Engines,  are finding a
+larger and larger role.  The growth of networks in general slows down the
+productivity of those involved in the network,  due to the exponential rate
+at which the information available multiplies (and thus the increase in
+effort required to find <i>relevent</i> information).
+<p>
+Agentspace is a possible answer to this complexity.   Agentspace is the name
+given to an Information Agent, written by myself<font size=1> 1</font>.
+<p>
+<b><font size="+2">What is an Information Agent?</font></b>
+<p>
+An Information Agent is a piece of Platform independent data which can
+contain information like variables,  executable code,  and potentially
+<i>any form of data</i>.  Agentspace uses simple strings to contain
+variables and variable data,  as well as defined compartments,  such as
+Execution Priority, and Codespace
+<p>
+<b><font size="+2">Data Gathering and Remote Execution</font></b><br>
+<p>
+Agentspace agents are the base of a much wider system,  that is provided by
+many other systems.  The current interface to creation and modification of
+Agentspace is a perl5 module (called Agent).  The remote execution is also
+provided through a perl5 module,  called penguin,  along with the
+PenguinAgent interface (a module I am writing at the moment).  The transport
+is provided through the IO::Socket module,  and a client/server based
+system.  However,  this is my system.   Because of the nature of the actual
+Agentspace agents,  any other system that is capable of splitting a string
+into pieces could also be used to modify Agentspace.
+<p>
+<b><font size="+2">Portablitiy</font></b><br>
+<p>
+In a system like an agent,  where the idea is for the information to move
+around constantly,  a key issue is portablity.  Agentspace tackles this by
+removing certain issues of portablity, such as <i>specific language
+dependence</i>.  Agentspace is merely a way of packing data into a tangible
+form.  Any language that can perform uudecoding,  and splitting/joining of
+strings is capable of providing a stable platform for any Agentspace agent.
+<p>
+<b><font size="+2">Availability</font></b><br>
+<p>
+The perl5 code needed for implementing Agentspace 2.9 is available from any
+CPAN <font size="1">4</font> site,  in my (JDUNCAN) ID directory.  It is
+also available from ftp.hawk.igs.net in the directory pub/users/jduncan/Agent.
+<p>
+Agentspace is a royalty free concept,  along with Agent (the perl5
+implementation), which is distributed under the same license as perl itself.
+<p>
+<hr>
+<i>
+<b><font size="+2">Footnotes (links??)</font></b><br>
+</i>
+<ol>
+<li><a href="mailto:jduncan@hawk.igs.net">jduncan@hawk.igs.net</a></li>
+<li><a href="http://coriolan.amicus.com/penguin.html">Penguin</a></li>
+<li><a href="http://www.javasoft.com">JavaSoft</a></li>
+<li><a href="http://mox.perl.com/CPAN/">CPAN Multiplexor</a></li>
+</ol>
+<p>
+<hr>
+Back to the <a href="http://www.hawk.igs.net/~jduncan/agent/">Agentspace Homepage</a>.<p>
+<hr>
+</body>
+</html>
+ 

@@ -1,0 +1,51 @@
+Agent FAQ
+-=-=-=-=-
+
+
+  Q. What does Agent do?
+  
+  A. Agent allows perl to access agentspaces.
+
+  
+  Q. What is agentspace? 
+
+  A. Agentspace is the area a software agent reserves for variables, code, 
+     and priority levels.
+       It is language-independent (ie,  just because Agent happens to
+     be a perl module,  it doesn't mean you can't write a Tcl extension
+     to use an agentspace packed via packself.)  Variables within agentspace
+     are all internal to the agent,   and are not affected by the language
+     used to create them or modify them.
+
+
+  Q. Will Agentspace handle its own transportation,  or will it 
+     rely on host machines for the transport method?
+
+  A. By coding in it's own tranportation system,  Agentspace will make
+     itself a) overweight and b) not a true agent.  A true agent is fully
+     transportable,  and in order to make it internally  transportable
+     it would need to rely on the original machine.  Agentspace
+
+  Q. Who is doing all this?
+
+  A. I am,  err,  yeah.  James Duncan.  If you have any comments on Agent
+     and Agentspace, please send them to me -> jduncan@hawk.igs.net.  I'm
+     doing it in my spare time when I'm not at school,  so cut me some
+     slack,  please?
+
+
+  Q. How can I help?
+
+  A. You can use Agent.  I'm sure you can think of a way to use it :-).  If
+     you find it restrictive,  or unversatile,  please email me,  and let 
+     me know what you find resrictive and unversatile.  I am more than
+     willing to code new features into Agent,  and into the agentspace
+     definition.
+
+
+  Q. Is there a Web Page?
+
+  A. James is behind this! of course there is!  It can be found at
+     http://www.hawk.igs.net/~jduncan/agent/ - it isn't anything special,
+     but I'll announce it there first.
+

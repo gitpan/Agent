@@ -1,0 +1,44 @@
+
+			   Agent Kit, Version 2.91
+
+		         Copyright 1996, James Duncan
+			    All rights reserved.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of either:
+
+	a) the GNU General Public License as published by the Free
+	Software Foundation; either version 1, or (at your option) any
+	later version, or
+
+	b) the "Artistic License" which comes with the perl5 kit.
+
+    With the following exception:  Commercial use of this program is both
+    royalty free and allowed,  however,  please email me (jduncan@hawk.igs.net)
+    to let me know who you are and what you are using it for.  I will not
+    ask for any fee,  I just want to know its uses!
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See either
+    the GNU General Public License or the Artistic License for more details.
+
+    
+
+  Agent provides object methods for creating and accessing agentspace (A
+language/platform independent software agent).   Version 2.91 has a couple
+of changes since 2.9. $self->{'Code'} and $self->{'Priority'} now exist and
+are packable within the agentspace.  $self->{'Scope'} has dissapeared,  I
+don't know really why it was there in the first place :-).  
+  $self->{'Code'} and $self->{'Priority'} will be used in the upcoming 
+AgentPenguin kit that I am writing,  if you are interested,  and have
+suggestions,  I'm open to all.
+
+  See the file CHANGES for more information on what has taken place since
+the Wednesday on which I first uploaded Agent-2.9.  Also take a look at
+everything underneath the docs/ subdirectory.  It'll probably have a lot of
+the answers you are looking for.
+
+Regards,
+James
+Tue May 28 18:27:08 EDT 1996

@@ -1,0 +1,30 @@
+Changes since Agent-2.9
+-=-=-=-=-=-=-=-=-=-=-=-
+
+  1)  Added support for two new compartments - Code and Priority.  Also
+      added methods for these two items.
+
+  2)  Made Agent-2.91 sleep and wake methods backwardly compatible with 
+      Agent-2.9's packself and unpackself (not so much a change,  just a 
+      notification)
+
+  3)  Renamed packself and unpackself to more appropriate names: sleep and
+      wake, respectively.
+
+  4)  More podstyle documention included.
+
+  5)  You can now type 'make dist' if you want to give this away to your
+      friends (please do (-: )
+
+  6)  Added a docs/ subdir.  This contains the INSTALL, README,  and FAQ
+      documents.  Also included is a very rough draft in HTML for
+      Agentspace.
+
+  7)  The Web page now has a lot more information on it =>
+
+              http://www.hawk.igs.net
+
+  8)  I am looking for someone to donate me a mailing list :) any takers?
+
+
+
