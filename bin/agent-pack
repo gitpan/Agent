@@ -15,13 +15,9 @@ $my_agent->add(Name => 'Time',
 	       Value => $date);
 $my_agent->add(Name => 'Author',
 	      Value  => 'James Duncan');
-$my_agent->addcode( Code => 'print \'Ed\';' );
-$my_agent->setpriority( Level => 'Urgent' );
 
 # pack the agent up for transportation into $trs.
-$trs = $my_agent->sleep();
+$trs = $my_agent->packself();
 
 # print the agent to the screen.  Can be piped to a file for later unpacking?
 print $trs;
-
-# and thasall folks!

@@ -1,11 +1,9 @@
 Agent.pm
-CHANGES
+FAQ
+INSTALL
 MANIFEST
 Makefile.PL
 README
+TODO
 bin/agent-pack
 bin/agent-unpack
-docs/agentspace.html
-docs/FAQ
-docs/INSTALL
-docs/TODO

@@ -1,0 +1,6 @@
+TODO
+-=-=
+
+	1. Time sign and checksum the packed code.
+
+	2. Fix bugs w/ read/add/write methods 
