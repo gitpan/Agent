@@ -1,0 +1,136 @@
+*** Tom.pm	Fri Nov 14 18:13:43 1997
+--- Tom.pm.new	Fri Jan 23 17:18:23 1998
+***************
+*** 1,5 ****
+--- 1,11 ----
+  package Tom;
+  
++ # Patch level 03 submitted by Steve Purkis, Jan 23, 1998.
++ #	- checksum() returns MD5 hex key (03)
++ #	- store() no longer calls cleanup() (03)
++ #	- class() returns the object's class name (02)
++ #	- functions are eval'd in their packages (01)
++ 
+  require 5.004;  	# this can be turned off with very little modification to
+  			# the module.
+  
+***************
+*** 49,55 ****
+  
+  	my $self = shift;
+  	my $fnc  = shift;
+! 	eval "sub $self->{Class}::$fnc $self->{$fnc}";
+  	if ($@) {
+  		return 0;
+  	} else { return 1 }
+--- 55,61 ----
+  
+  	my $self = shift;
+  	my $fnc  = shift;
+! 	eval "package $self->{Class}; sub $self->{Class}::$fnc $self->{$fnc}";
+  	if ($@) {
+  		return 0;
+  	} else { return 1 }
+***************
+*** 73,79 ****
+  	print "Declaring $self->{Class}::$args{Name}\n" if $Tom::debug;
+  	$self->{$args{Name}} = $args{Code};
+  	$self->{Functions}[$self->{FunctionCnt}] = $args{Name};
+! 	eval "sub $self->{Class}::$args{Name} $args{Code}";
+  	$self->{FunctionCnt}++;
+  }
+  
+--- 79,85 ----
+  	print "Declaring $self->{Class}::$args{Name}\n" if $Tom::debug;
+  	$self->{$args{Name}} = $args{Code};
+  	$self->{Functions}[$self->{FunctionCnt}] = $args{Name};
+! 	eval "package $self->{Class}; sub $self->{Class}::$args{Name} $args{Code}";
+  	$self->{FunctionCnt}++;
+  }
+  
+***************
+*** 83,88 ****
+--- 89,99 ----
+  	return eval $self->{Object};
+  }
+  
++ sub class {
++ 	my $self = shift;
++ 	return $self->{Class};
++ }
++ 
+  sub methods {
+  	my $self = shift;
+  	return $self->{Functions};
+***************
+*** 93,99 ****
+  	$self->{'main'} = shift;
+  }
+  
+- 
+  sub insert {
+  	my $self = shift;
+  	my $obj = shift;
+--- 104,109 ----
+***************
+*** 146,152 ****
+  			}
+  		}
+  		foreach my $fnc (@{$self->{Functions}}) {
+! 			$cpt->reval("sub $self->{Class}::$fnc $self->{$fnc}");
+  			if ($@) {
+  				croak("ERROR: $@");
+  			}
+--- 156,162 ----
+  			}
+  		}
+  		foreach my $fnc (@{$self->{Functions}}) {
+! 			$cpt->reval("package $self->{Class}; sub $self->{Class}::$fnc $self->{$fnc}");
+  			if ($@) {
+  				croak("ERROR: $@");
+  			}
+***************
+*** 187,195 ****
+--- 197,217 ----
+  	}
+  }
+  
++ sub checksum {
++ 	my $self = shift;
++ 
++ 	my $middle = pack("u",Dumper($self));
++ 
++ 	my $md = new MD5;
++ 	$md->reset();
++ 	$md->add($middle);
++ 	return $md->hexdigest();
++ }
++ 
+  sub store {
+  	my ($self, %args) = @_;
+  	my $class;
++ 
+  	$class = $self->{Class};
+  	my $top = "-- Tom $Tom::VERSION ($Tom::SUBVERSION) Class: $class --\n";
+  	my $middle = pack("u",Dumper($self));
+***************
+*** 200,206 ****
+  	my $digest = unpack("H*", $md->digest());
+  	$digest .= "\n";
+  	my $package = $top . $digest . $middle . $top;
+! 	$self->cleanup();
+  	return $package;
+  }
+  
+--- 222,232 ----
+  	my $digest = unpack("H*", $md->digest());
+  	$digest .= "\n";
+  	my $package = $top . $digest . $middle . $top;
+! 
+! 	# this effectively deletes the object's class, but if the user wants
+! 	# to keep using the object... not good.
+!  #	$self->cleanup();
+! 
+  	return $package;
+  }
+  

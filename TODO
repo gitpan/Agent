@@ -1,6 +1,21 @@
+----
 TODO
--=-=
+----
 
-	1. Time sign and checksum the packed code.
+These are some things I'd like to do before releasing Agent 3.01.
 
-	2. Fix bugs w/ read/add/write methods 
+    -	Agent identification is slightly broken: it doesn't return the
+	current state of the agent.
+    -	Agent::Message should support MD5 checksums.
+    -	Make Agent smart enough to figure out the IP address of the
+	local host.
+    -	Make an Agent::Socket test file.
+
+Other goals:
+    -	support the KQML/KIF communication standards implemented as classes
+	(perhaps external to Agent?).
+    -	direct support for PGP signatures & encryption.
+    -	make sure security features work properly.
+
+--Steve Purkis
+January 23, 1997

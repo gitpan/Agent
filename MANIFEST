@@ -1,9 +1,14 @@
 Agent.pm
-FAQ
 INSTALL
 MANIFEST
 Makefile.PL
 README
 TODO
-bin/agent-pack
-bin/agent-unpack
+test.pa
+test.pl
+Agent/Message.pm
+Agent/TCPIP.pm
+examples/ipresolv.pl
+examples/loop.pa
+examples/loop.pl
+t/message.t

@@ -1,22 +1,59 @@
-How to install Agent
--=-=-=-=-=-=-=-=-=-=
+----------------
+Installing Agent
+----------------
 
-	1. Unpack the archive (Agent-2.9.tar.gz).
+Pre-requisites
+--------------
 
-	2. Type 'perl Makefile.PL'.
+You _must_ have the following modules installed on your system in order for
+Agent to function properly:
 
-	3. Run 'make' followed by 'make install'.
+	Tom-2.00 (and inherently Protect, Safe, MD5, & Data:Dumper)
+	[IO]
 
-	4. Type 'perldoc Agent' to find out
-	   how to do things.
+IO and Safe are now distributed with the Perl core, so if you have Perl
+5.004, don't worry about them.  If you don't, you can pick up the latest
+versions from your local CPAN mirror.  Both Tom and Protect can be found at
+James Duncan's website:
 
-	5. Read the Agent.pm module source code.
+	http://www.hawk.igs.net/~jduncan
 
-	6. Read bin/*  it will let you know how to use
-	   Agent,  as well as also demonstrating Agentspace.
 
-	7. Write little agents to populate the net.
+Installing
+----------
 
-	8. Give me a backlash,  and tell me how much you hate it, and
-	   why -> jduncan@hawk.igs.net - thanks - James.
+In general, the following should work:
 
+	edit $Hostname in Agent.pm (see 'Configuring Agent')
+	perl Makefile.PL
+	make
+	make install
+
+
+Note for Win32 Users
+--------------------
+
+If you're running Win32, you'll be asked if you want Agent installed
+directly, or in the standard [above] fashion.  Unless you had the guts to
+build perl yourself, answer yes to this question.  And don't try to 'make'
+or 'make install' a non-existant Makefile :-).
+
+
+Configuring Agent
+-----------------
+
+I haven't added ip-resolution to Agent yet, so you'll have to enter your ip
+address manually.  To do this, just edit the 'Agent.pm' file, and set:
+
+	$Hostname = 'your.ip.address.here'	# somewhere near the top
+
+In addition to this, if you have Tom-2.00 (and you _should_), you'll have to
+apply the patch-file I've included ('Tom-2.00-03.patch'), or simply just
+copy 'Tom.pm.new' over 'Tom.pm'.  This patch adds some functions that should
+be included in the next release of Tom, and that are required by Agent.
+
+
+Please read the README file before you start to play :-).
+
+--Steve Purkis
+January 23, 1998
