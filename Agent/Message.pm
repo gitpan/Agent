@@ -8,6 +8,8 @@
 ##
 
 package Agent::Message;
+use vars qw( $Debug );
+
 #$Debug = 1;
 
 sub new {
@@ -27,19 +29,23 @@ sub new {
 
 sub send {
 	my $self = shift;
+	my %args = @_;
 	my %trans = %{$self->{Transport}};
+	my @return;
+
 	foreach $medium (keys(%trans)) {
 		my @addrs = @{$trans{$medium}};
 		print "Sending message in $medium.\n" if $Debug;
 		foreach $address (@addrs) {
-			&Agent::Transport::send(
+			push @return, &Agent::Transport::send(
 				Medium  => $medium,
 				Address => $address,
-				Message => $self->{Body}
+				Message => $self->{Body},
+				%args
 			);
 		}
 	}
-	1;
+	return @return;
 }
 
 sub add_dest {
@@ -52,7 +58,7 @@ sub del_dest {
 	my $self = shift;
 	my $medium = shift or return;
 	my %trans = %{$self->{Transport}};
-	foreach $addr (@_) {
+	foreach my $addr (@_) {
 		;	# can't be bothered at the moment.
 	}
 }
@@ -153,15 +159,17 @@ medium.  If last destination in medium, removes medium also.
 
 Removes the specified transport medium and all of its destinations.
 
-=item $msg->send()
+=item $msg->send( %args )
 
-Sends the message body in all transport mediums.
+Sends the message body in all transport mediums.  Passes C<\%args> to all
+transport mediums when sending.  Returns an array of results returned by
+each transport medium the message was sent in.
 
 =back
 
 =head1 BUGS
 
-C<$msg->del_dest> and C<$msg->del_transport> don't work, and I'm too lazy.
+$msg->del_dest and $msg->del_transport don't work; I'm too lazy.
 
 =head1 SEE ALSO
 

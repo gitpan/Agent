@@ -2,11 +2,13 @@
 
 ##
 # Transport class stub for Agent.pm messages.
-# Steve Purkis
+# Steve Purkis <spurkis@engsoc.carleton.ca>
 # June 21, 1998
 ##
 
 package Agent::Transport;
+use vars qw( $Debug );
+
 #$Debug = 1;
 
 
@@ -15,6 +17,7 @@ package Agent::Transport;
 ##
 
 sub AUTOLOAD {
+	return if (@_ % 2);	# was this _meant_ to be called?
 	my (%args) = @_;
 	my $med = delete $args{Medium} or return;
 	$AUTOLOAD =~ /^((\w+\:\:)+)(\w+)$/;
@@ -54,6 +57,7 @@ sub new {
 			return;
 		}
 	}
+	# does this really need to be wrapped in an eval?
 	return eval "new $pkg( \%args )";
 }
 
@@ -81,8 +85,8 @@ Agent::Transport - the Transportable Agent Perl module
 =head1 DESCRIPTION
 
 This package provides a standard interface to different transport mediums.
-C<Agent::Transport> does not contain any transport code itself; it merely
-gets subclasses to do all the work.
+C<Agent::Transport> does not contain any transport code itself; it contains
+a constructor, and code that autoloads the appropriate transport methods.
 
 =head1 CONSTRUCTOR
 
@@ -90,21 +94,27 @@ gets subclasses to do all the work.
 
 =item new( %args )
 
-C<new> must be passed a I<Medium> argument.  I<Address> is a proposed
-standard for passing transport addresses.  Any other arguments, both
-optional and requirerd, will be documented in the corresponding subclass
-(ie: Agent::Transport::TCP).
+new() must be passed at least a I<Medium>.  The I<Address> argument is
+strongly recomended (and should be required in most cases), as it's best not
+to let the system make assumptions.  new() decides which Transport package
+to use base upon the C<Medium> specified.  C<Address> is the destination in
+that medium.  Any other arguments will be documented in the Agent::Transport
+subclasses (such as Agent::Transport::TCP).
 
 =back
 
-=head1 STANDARD METHODS
+=head1 STANDARD API METHODS
+
+These methods are implemented in all transport subclasses.
 
 =over 4
 
 =item $t->recv()
 
 C<recv> attempts to retrieve a message (from said address, over said
-transport medium).  Returns a list of data, or nothing if unsuccessful.
+transport medium).  Returns the data if called in a scalar context, or a
+list containing ($data, $from_address) if called in an array context. 
+Returns nothing (i.e. sv_null or an empty list) if unsuccessful.
 
 =item $t->transport()
 
@@ -126,19 +136,22 @@ Returns a list of addresses at which the object can be reached.
 
 =item send( %args )
 
-C<send> too must be passed I<Medium>.  It also requires an I<Address>
-(scalar), and a I<Message> (anonymous list / reference).
+C<send> too must be passed a I<Medium> and an I<Address>.  In addition, it
+also needs a I<Message> as either an anonymous array or a reference to an
+array.
 
 =item valid_address( %args )
 
 This checks to see if the I<Address> provided is valid within the I<Medium>
-specified.  Returns the address if so, and nothing otherwise.
+specified by checking the I<syntax> of the address.  It does not check to
+see whether or not said address exists.  Returns the address if successful,
+or nothing otherwise.
 
 =back
 
 =head1 SEE ALSO
 
-C<Agent>, C<Agent::Message>, C<Agent::Transport::*>, and the example agents.
+L<Agent>, L<Agent::Transport::*>
 
 =head1 AUTHOR
 

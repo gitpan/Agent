@@ -1,7 +1,12 @@
-Agent Examples
---------------
+Agent Perl Examples
+-------------------
 
-There are four sample agents provided with this distribution of Agent:
+Copyright (c) 1997, 1998 Steve Purkis.  All rights reserved.  This software
+is free software; you can redistribute it and/or modify it under the same
+terms as Perl itself.
+
+There are now 5 example agents distributed with Agent Perl:
+
    *	the Loop agent - repeatedly sends the message 'hi' to another loop
 	agent.  This one can be invoked in one of two ways: as an initiator
 	or as a reciever.  An initiator starts the loop, while a reciever
@@ -13,15 +18,27 @@ There are four sample agents provided with this distribution of Agent:
    *	the HelloWorld agent - transports itself to a remote address, and
 	attempts to print 'Hello World' on the remote screen.
 
-   *	the SpaceFree agent - transports itself to a remote addresses, and
+   *	the FreeSpace agent - transports itself to a remote addresses, and
 	attempts to find out how much space is free on each host,
 	printing a summary on the last host it reaches.
 
-I haven't the time to create a more complicated agent than those listed,
-but if anybody comes up with one, I'd be more than happy to include it with
-the full release.
+   *	the Eval agent - jumps to remote host, eval()s code there & returns
+	results to a specified TCP address.
 
-Usage is contained within each file.
+Along with these examples comes:
 
---Steve Purkis
-March 28, 1998
+   *	Template.pa - a template file for writing agents.
+
+   *	dcalc.pl - uses Eval agents to perform a simple distributed
+	calculation with random numbers.
+
+Try 'perldoc <filename>' to get an in-depth description and summary of
+usage for each file.
+
+
+If anybody comes up with any agents they'd like to share with the rest of
+the world, I'd be more than happy to include them with the next release.
+
++---
+ Steve Purkis <spurkis@engsoc.carleton.ca>
+ October 24, 1998

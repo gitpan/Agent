@@ -7,7 +7,7 @@
 
 BEGIN {
 	$| = 1;
-	print "1..3\n";
+	print "1..5\n";
 	sub ok  { $i++; print "ok $i\n"; }
 	sub nok { $i++; print "not ok $i\n"; }
 }
@@ -17,8 +17,8 @@ use Agent;
 $loaded = 1;
 ok;
 
-($a = new Agent( File => 'test.pa' )) ? ok : nok;
-$a->agent_main() ? ok : nok;
+($a = new Agent( Name => 'test.pa' )) ? ok : nok;
+$a->run() ? ok : nok;
 ($b = $a->store()) ? ok : nok;
 ($c = new Agent( Stored => $b )) ? ok : nok;
 

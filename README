@@ -1,107 +1,115 @@
----------------
-Agent.pm v3.01g
----------------
+--------------
+Agent.pm v3.20
+--------------
 
-Copyright (c) 1997-1998 Steve Purkis.  All rights reserved.
-The Agent module can be distributed or modified under the 'Artistic
-License', as distributed with Perl.  The author guarantees nothing about
-anything to do with this module; you use it at your own risk.
-
-
-Welcome to the 3.01 alpha release of Agent, the perl module.  This file
-contains a brief overview of Agent, and some things that you'll need to
-know in order to get Agent up and running on your system.
-
-For instructions on installing and configuring Agent, see the INSTALL file.
+Copyright (c) 1997-1998 Steve Purkis.  All rights reserved.  The Agent
+module can be distributed or modified under the 'Artistic License', as
+distributed with Perl.  The author guarantees nothing about anything to
+do with this module; you use it at your own risk.
 
 
-Note
-----
-
-Barring any glaring errors, this will be the final alpha release of Agent
-before Agent v3.02 is released.
-
-
-
-Major Changes since v3.01e!
----------------------------
-
-There have been some major changes to the API, most of which are in the
-communication layers.  *Old Agents WILL NOT WORK* with this release!
-Please see the file 'CHANGES', the pod, and example agents for details.
+Welcome to the 3.2 release of Agent Perl, the first full release of this
+module!  This file contains a brief overview of Agent Perl, and some things
+that you'll need to know in order to get it up and running on your system.
 
 
 Overview
 --------
 
-Agent is a foundation meant to assist in the development and use of
-transportable Perl agents. [A transportable Perl agent is Perl code that
-can both communicate with other software agents, and migrate between
-computers over a heterogeneous network.]
+Agent Perl provides both a foundation for software agent developers, and a
+standardized API for the agent's users.  Agent's two most prominent features
+are its support for agent transportation and abstract messaging over
+different mediums.
 
-In a nutshell, Agent provides methods for an agent to inherit.  In doing
-so, it gives an agent a way of communicating, and transporting itself.
+[A transportable perl agent is Perl code that can communicate with other
+ disparate entities, and can migrate between computers over a heterogeneous
+ network to perform some task for a client.]
 
 
 Prerequisites
 -------------
 
+Required Modules:
+	Class::Tom 2.04+ (3.x not supported!)
+	MD5
+
+Optional module for *alpha* threads support:
+	Thread
+
 Platforms:
-	Linux & Win95 (it _should_ work on other flavours of Unix and NT).
-	Note that Agent currently relies on TCP/IP networking (until
-	someone writes another Transport module).
-
-Modules:
-	Class::Tom (and MD5, Safe*, & Data::Dumper*)
-	IO*
-
-* - distributed in Perl core for Perl5.004_04, so don't worry.
+	U*nix & Win32
+	Mac? OS/2?
 
 
-Designing & using an agent
---------------------------
+Using Agents
+------------
 
-First, read the PODs for Agent.  Then have a look in the 'examples'
-sub-directory for some sample agents.
+First of all, make sure you know how to use an object (the perlobj manpage is
+a good place to start).  Then read the Agent.pm's POD, and that of the agent
+you are trying to use.  After that, you're on your own, unless there are any
+examples lying around :-).
 
-An agent is simply an object that inherits methods from the Agent package. 
-So to create an agent, first you need to define its class.
+If you would like to use the security features of Agent Perl, browse through
+the Safe and Opcode PODs, and have a gander at 'Safe.readme'.
 
-An agent's class should be defined in a corresponding file 'agent_name.pa',
-and should (optimally) be a sub-class of Agent itself (ie: Agent::RWho).
-Because agents are not stored in a central '.pm' file, an agent need not be
-unique.  For example, there may be three 'RWho' agents, each containing
-different code.
 
-Make *sure* you don't step on Agent.pm's toes by redefining the
-Agent::Message or Agent::Transport classes.
+Developing Agents
+-----------------
 
-All agents should have an 'agent_main()' method.  This method will be
-invoked when an agent is first created, and after a hop from one machine
-to the next.
+After you've read this, read the PODs for Agent.pm and all of its nested
+modules.  Read *.readme in the root directory.  Then have a look in the
+'examples' sub-directory for some functional *sample* agents.
 
-A subset of the methods an agent inherits allow for communication,
-identification, and transportability; at the moment, these are the key
-features of Agent.  Have a look through the code to see how to use them.
+Make *sure* you don't step on Agent.pm's toes by redefining the Message or
+Transport subclasses.
 
-And finally, take a good look at the example agents provided; they should
-help.  If they don't, please tell me.  I'm trying to write more examples,
-but I haven't had time recently; if you come up with a functional agent, I'd
-like to see it.
+An agent is simply an object.  It inherits methods from the Agent package. 
+So to define an agent, all you need to do is define its class.
+
+There are some rules you should adhere to, however:
+
+   1.	An agent's class should be saved in a suitable <agentname>.pa file.
+   2.	All agents should inherit from the 'Agent' package. 
+   3.	All agents must have an 'agent_main()' method.
+   4.	An agent's state variables should be stored within the agent's
+	object, and NOT within the class.
+   5.	Document your agent, preferably with POD!
+
+Additional notes:
+
+The agent's class _should_ be a sub-class of Agent itself.  Here's a good
+naming scheme for your agents:
+
+	package Agent::YourAgentName;
+
+Because '.pa' files are not necessarily stored in a central place, they need
+not be unique.  For example, if two different users define two different
+'RWho.pa' agents in two different locations, the do not need to worry which
+.pa file will be used.
+
+
+PS: If you come up with a functional agent, I'd love to hear about it!
 
 
 Down the road...
 ----------------
 
 If this release of Agent looks promising, I hope to include support for
-PGP encryption & signatures, the KQML/KIF communication standards, and more.
-There are some hooks in place for secure code execution, and for William
-Annis' KQML module, but nothing trustworthy yet.
+PGP encryption & signatures, the KQML/KIF communication standards
+(underway!), and more.
 
+
+Links
+-----
+
+The Homepage: 		http://www.epn.ml.org/~spurkis/Agent
+The Mailing List:	perl5-agents@daft.com
 
 Any questions, comments, bug reports, or suggestions you may have, I'd
-appreciate hearing; don't be shy ;-).
+like to hear about.
 
----
+
+Enjoy!
++---
  Steve Purkis <spurkis@engsoc.carleton.ca>
- July 30, 1998
+ December 15, 1998
